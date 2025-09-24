@@ -2,13 +2,19 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../../lib/supabaseClient"
 
+interface User {
+  id: string
+  name: string
+  email: string
+}
+
 export default function UsersPage() {
-  const [users, setUsers] = useState<any[]>([])
+  const [users, setUsers] = useState<User[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await supabase.from("users").select("*")
-      setUsers(data || [])
+      setUsers(data as User[] || [])
     }
     fetchData()
   }, [])
